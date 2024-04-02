@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node --watch app.js"
+    "start": "node --watch Desafio2/usuarios.js"
   },
   "keywords": [],
   "author": "",
