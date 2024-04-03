@@ -8,20 +8,18 @@ const productManager = new ProductManager(filePath);
 
 
 // Agrego producto 1
-productManager.addProduct('Camisa', 'Camisa de algodón', 25, 'camisa.jpg', 'CM001', 50)
+productManager.addProduct('Camisa', 'Camisa de algodón', 25, 'camisa.jpg', 'ZR001', 50)
 
 //Cuando se termina de agregar el producto 1, comienza el .then
     .then(() => {
-        console.log('Producto 1 agregado correctamente');
 
         // Agrego producto 2
-        return productManager.addProduct('Pantalón', 'Pantalón vaquero', 40, 'pantalon.jpg', 'PT002', 30);
+        return productManager.addProduct('Pantalón', 'Pantalón vaquero', 40, 'pantalon.jpg', 'CM001', 30);
         // Pongo return al el .then para que no se ejecuten todas las operaciones simultaneamente
     })
 
 //Cuando se termina de agregar el producto 2, comienza el .then
     .then(() => {
-        console.log('Producto 2 agregado correctamente');
 
         // Agrego producto 3
         return productManager.addProduct('Zapatos', 'Zapatos deportivos', 60, 'zapatos.jpg', 'ZP003', 20);
@@ -29,7 +27,6 @@ productManager.addProduct('Camisa', 'Camisa de algodón', 25, 'camisa.jpg', 'CM0
 
 //Cuando se agregue el producto 3, comienza el .then
     .then(() => {
-        console.log('Producto 3 agregado correctamente');
 
         // Obtengo el producto por su ID
         return productManager.getProductById(3);

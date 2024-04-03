@@ -26,32 +26,35 @@ class ProductManager {
     }
 
     async addProduct(title, description, price, thumbnail, code, stock) {
-        if (!title || !description || !price || !thumbnail || !code || !stock) {
-            console.error("Todos los campos son obligatorios");
-            return;
+        try {
+            if (!title || !description || !price || !thumbnail || !code || !stock) {
+                throw new Error("Todos los campos son obligatorios");
+            }
+    
+            //valido que el campo "code" no esté repetido
+            const codeExists = this.products.some(product => product.code === code);
+            if (codeExists) {
+                throw new Error("El código ya está en uso");
+            }
+    
+            const productId = this.products.length + 1;
+    
+            const newProduct = {
+                id: productId,
+                title,
+                description,
+                price,
+                thumbnail,
+                code,
+                stock
+            };
+    
+            this.products.push(newProduct);
+            console.log('Producto agregado')
+            await this.saveProducts(); // Espera a que se guarde el producto antes de continuar
+        } catch (error) {
+            console.error("Error al agregar producto:", error.message);
         }
-
-        //valido que el campo "code" no esté repetido
-        const codeExists = this.products.some(product => product.code === code);
-        if (codeExists) {
-            console.error("El código ya está en uso");
-            return;
-        }
-
-        const productId = this.products.length + 1;
-
-        const newProduct = {
-            id: productId,
-            title,
-            description,
-            price,
-            thumbnail,
-            code,
-            stock
-        };
-
-        this.products.push(newProduct);
-        this.saveProducts();
     }
 
     async getProductById(id) {
