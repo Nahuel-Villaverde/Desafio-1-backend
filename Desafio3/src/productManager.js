@@ -67,7 +67,8 @@ class ProductManager {
             return null;
         }
 
-        return console.log(product);
+        console.log(product);
+        return product;
     }
 
     async updateProduct(id, updatedFields) {

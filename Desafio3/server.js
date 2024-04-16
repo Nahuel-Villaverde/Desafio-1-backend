@@ -93,6 +93,20 @@ app.get('/products/query', async (req, res) => {
 
 //http://localhost:8080/products/query?limit=3
 
+app.get('/products/:pid', async (req, res) => {
+    try {
+        const productId = parseInt(req.params.pid);
+        const product = await productManager.getProductById(productId);
+        
+        if (!product) {
+            res.status(404).json({ error: 'Producto no encontrado' });
+        } else {
+            res.json(product);
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error al cargar el producto' });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Servidor Express escuchando en el puerto ${PORT}`);
