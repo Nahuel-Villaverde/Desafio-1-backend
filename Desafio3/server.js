@@ -4,6 +4,7 @@ const ProductManager = require('./src/productManager');
 const app = express();
 const PORT = 8080;
 
+app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
 // Instancio productManager
@@ -97,7 +98,7 @@ app.get('/products/:pid', async (req, res) => {
     try {
         const productId = parseInt(req.params.pid);
         const product = await productManager.getProductById(productId);
-        
+
         if (!product) {
             res.status(404).json({ error: 'Producto no encontrado' });
         } else {
