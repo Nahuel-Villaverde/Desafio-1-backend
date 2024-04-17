@@ -4,7 +4,7 @@ const ProductManager = require('./src/productManager.js');
 const app = express();
 const PORT = 8080;
 
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Instancio productManager
@@ -64,35 +64,25 @@ const productManager = new ProductManager('./products.json');
 // Endpoint para obtener todos los productos
 app.get('/products', async (req, res) => {
     try {
-        const products = await productManager.getProducts();
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al cargar los productos' });
-    }
-});
+        let actualLimit = 5;
 
-// Endpoint para obtener x productos
-app.get('/products/query', async (req, res) => {
-    try {
-        const limit = parseInt(req.query.limit);
-        let actualLimit;
+        if (req.query.limit) {
+            const limit = parseInt(req.query.limit);
 
-        if (isNaN(limit) || limit <= 0) {
-            actualLimit = 5;
-        } else {
-            actualLimit = limit;
+            if (!isNaN(limit) && limit > 0) {
+                actualLimit = limit;
+            }
         }
 
         const products = await productManager.getProducts();
         const limitedProducts = products.slice(0, actualLimit);
-
         res.json(limitedProducts);
     } catch (error) {
         res.status(500).json({ error: 'Error al cargar los productos' });
     }
 });
 
-//http://localhost:8080/products/query?limit=3
+//http://localhost:8080/products/?limit=3
 
 app.get('/products/:pid', async (req, res) => {
     try {
